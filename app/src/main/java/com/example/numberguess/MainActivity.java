@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         desc.setText("You have 5 trials to guess a random generated number between 0 and 100. You have 5 attempts and will be told if the number is higher or lower");
 
         guessButton = findViewById(R.id.guessButton);
+        guessButton.setText("Go");
         higher = findViewById(R.id.higher);
         lower = findViewById(R.id.lower);
         youLose = findViewById(R.id.youLose);
