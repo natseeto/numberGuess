@@ -15,8 +15,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView desc;
     private TextView higher;
     private TextView lower;
-    private TextView number;
+    private TextView youLose;
     private EditText userInput;
+    public int i = 0;
+    public int max = 100;
+    public int min = 0;
+    public double x = Math.round((Math.random() * ((max - min) + 1)) + min);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("Number Guess Game");
-        
+
         desc = findViewById(R.id.desc);
         desc.setText("You have 5 trials to guess a random generated number between 0 and 100. You have 5 attempts and will be told if the number is higher or lower");
 
         guessButton = findViewById(R.id.guessButton);
         higher = findViewById(R.id.higher);
         lower = findViewById(R.id.lower);
-        number = findViewById(R.id.number);
+        youLose = findViewById(R.id.youLose);
         userInput = findViewById(R.id.userInput);
 
 
@@ -39,14 +43,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int max = 100;
-                int min = 0;
-                double x = Math.round((Math.random() * ((max - min) + 1)) + min);
                     int guess = Integer.parseInt(userInput.getText().toString());
                     if (checkGuess((int) x, guess)) {
-                        guessButton.setText("Good shit");
+
                     } else {
-                        guessButton.setText("try again bitch");
+                        guessButton.setText("try again");
+                    }
+                    i++;
+                    if (i==5&&!checkGuess((int)x, guess)){
+                        guessButton.setVisibility(View.INVISIBLE);
+                        youLose.setVisibility(View.VISIBLE);
+                        higher.setVisibility(View.INVISIBLE);
+                        lower.setVisibility(View.INVISIBLE);
+
                     }
             }
         });
@@ -56,15 +65,14 @@ public class MainActivity extends AppCompatActivity {
         if (number == guess) {
             Intent intent = new Intent(this, Result.class);
             startActivity(intent);
-            higher.setVisibility(View.INVISIBLE);
-            lower.setVisibility(View.INVISIBLE);
+
             return true;
         } else if (number < guess) {
-            higher.setVisibility(View.VISIBLE);
-            lower.setVisibility(View.INVISIBLE);
-        } else {
-            higher.setVisibility(View.INVISIBLE);
             lower.setVisibility(View.VISIBLE);
+            higher.setVisibility(View.INVISIBLE);
+        } else {
+            lower.setVisibility(View.INVISIBLE);
+            higher.setVisibility(View.VISIBLE);
             return false;
         } return false;
     }
