@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    //method used to check number
     private boolean checkGuess(int number, int guess) {
         if (number == guess) {
             Intent intent = new Intent(this, Result.class);
